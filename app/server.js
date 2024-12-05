@@ -5,10 +5,16 @@ let hostname = "localhost";
 let port = 3000;
 let app = express();
 let pool = new Pool(env);
+
+app.use(express.json());
+app.use(express.static("public"));
+
 pool.connect().then(() => {
     console.log("Connected to database");
 });
 
+
+// get all vehicles
 app.get("/vehicle", async (req, res) => {
     pool.query("SELECT * FROM records")
         .then(result => {
@@ -20,6 +26,7 @@ app.get("/vehicle", async (req, res) => {
         });
 });
 
+// add vehicle
 app.post("/vehicle", async (req, res) => {
     let { manufacturer, description, horsepower, modelname, modelyear, purchaseprice, fueltype } = req.body;
 
@@ -29,16 +36,18 @@ app.post("/vehicle", async (req, res) => {
 
     let uniqueID = Math.random().toString(36).substring(2, 15);
 
-    pool.query("INSERT INTO records (vin, manufacturer, description, horsepower, modelname, modelyear, purchaseprice, fueltype) VALUES ($1, $2, $3, $4, $5, $6, $7)", [uniqueID, manufacturer, description, horsepower, modelname, modelyear, purchaseprice, fueltype])
+    pool.query("INSERT INTO records (vin, manufacturer, description, horsepower, modelname, modelyear, purchaseprice, fueltype) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [uniqueID, manufacturer, description, horsepower, modelname, modelyear, purchaseprice, fueltype])
         .then(result => {
             let newRecord = result.rows[0];
-            res.status(201).json(newRecord);
+            console.log(newRecord);
+            res.status(201).json('Created');
         })
         .catch(error => {
             res.status(500).json(error.message);
         });
 });
 
+// get vehicle by vin
 app.get("/vehicle/:vin", async (req, res) => {
     let { vin } = req.params;
 
@@ -55,6 +64,7 @@ app.get("/vehicle/:vin", async (req, res) => {
         });
 });
 
+// update vehicle by vin
 app.put("/vehicle/:vin", async (req, res) => {
     let { vin } = req.params;
     let { manufacturer, description, horsepower, modelname, modelyear, purchaseprice, fueltype } = req.body;
@@ -85,6 +95,7 @@ app.put("/vehicle/:vin", async (req, res) => {
     });
 });
 
+// delete vehicle by vin
 app.delete("/vehicle/:vin", async (req, res) => {
     let { vin } = req.params;
 

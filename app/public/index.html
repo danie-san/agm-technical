@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Vehicle API</h1>
+
+    <p>Get All Vehicles</p>
+    <button onclick="getAllVehicles()">Get All Vehicles</button>
+    
+    <div class="add">
+        <p>Add a Vehicle</p>
+        <form id="addVehicle">
+            <input type="text" name="manufacturer" placeholder="Manufacturer" required>
+            <input type="text" name="description" placeholder="Description" required>
+            <input type="number" name="horsepower" placeholder="Horse Power" required>
+            <input type="text" name="modelname" placeholder="Model Name" required>
+            <input type="number" name="modelyear" placeholder="Model Year" required>
+            <input type="number" name="purchaseprice" placeholder="Purchase Price" required>
+            <input type="text" name="fueltype" placeholder="Fuel Type">
+            <button type="submit">Add Vehicle</button>
+        </form>
+    </div>
+
+    <p>Get Vehicle by VIN</p>
+    <input type="text" id="vinGet" placeholder="VIN">
+    <button onclick="getByVIN()">Get Vehicle</button>
+
+    <div class="update">
+        <p>Update a Vehicle</p>
+        <form id="updateVehicle">
+            <input type="text" name="vin" placeholder="VIN" required>
+            <input type="text" name="manufacturer" placeholder="Manufacturer">
+            <input type="text" name="description" placeholder="Description">
+            <input type="number" name="horsepower" placeholder="Horsepower">
+            <input type="text" name="modelname" placeholder="Model Name">
+            <input type="number" name="modelyear" placeholder="Model Year">
+            <input type="number" name="purchaseprice" placeholder="Purchase Price">
+            <input type="text" name="fueltype" placeholder="Fuel Type">
+            <button type="submit">Update Vehicle</button>
+        </form>
+    </div>
+
+    <p>Delete a Vehicle</p>
+    <input type="text" id="vinDel" placeholder="VIN">
+    <button onclick="deleteVehicle()">Delete Vehicle</button>
+
+    <p>Results</p>
+    <div id="output"></div>
+
+    <script src="/form.js"></script>
+</body>
+</html>
